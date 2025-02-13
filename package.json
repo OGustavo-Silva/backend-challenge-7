@@ -1,0 +1,22 @@
+{
+  "name": "challenge-backend-7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tsc && node ./build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.1",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.13.0"
+  }
+}
