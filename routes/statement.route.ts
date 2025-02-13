@@ -1,7 +1,8 @@
-import express, { Request, Response } from 'express';
-import { ObjectId } from 'mongodb';
+import { StatementValidator } from '../helpers/statement.helper';
 import { collections } from '../service/database.service';
+import express, { Request, Response } from 'express';
 import Statement from '../model/statement';
+import { ObjectId } from 'mongodb';
 
 export const router = express.Router();
 
@@ -19,10 +20,21 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.get('/:id', async (req: Request, res: Response) => {
   try {
-    const id = req?.params?.id
+    const validation = StatementValidator.validateGetQuery(req.params);
+    if (!validation) {
+      res.status(400).send('Invalid param');
+      return
+    };
+
+    const id = req.params.id;
 
     const query = { _id: new ObjectId(id) };
-    const statement = await collections.statement!.findOne({ query }) as Statement;
+    const statement = await collections.statement!.findOne(query) as Statement;
+
+    if (!statement) {
+      res.status(404).send('Data not found for specified id.');
+      return
+    };
 
     res.status(200).send(statement);
   } catch (error) {
